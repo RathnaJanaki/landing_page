@@ -1,23 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import SearchBar from './components/SearchBar';
+import SearchResults from './components/SearchResults';
+import Header from './components/header';
 
 function App() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [results, setResults] = useState([]);
+
+  const handleSearch = (query) => {
+    setSearchTerm(query);
+    // Mock search logic: Filter results based on the search term.
+    const mockData = ['React Basics', 'Advanced React', 'React Hooks', 'React Components'];
+    const filteredResults = mockData.filter(item =>
+      item.toLowerCase().includes(query.toLowerCase())
+    );
+    setResults(filteredResults);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Header/>
+      <SearchBar onSearch={handleSearch} />
+      <SearchResults results={results} />
     </div>
   );
 }
